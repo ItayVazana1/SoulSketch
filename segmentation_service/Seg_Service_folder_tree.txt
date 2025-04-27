@@ -1,0 +1,23 @@
+📁 ./
+    📄 config.yaml
+    📄 requirements.txt
+    📄 segment_service.py
+    📁 models/
+        📁 medium/
+            📄 Yolo_v08_medium-seg.pt
+            📄 Yolo_v11_medium-seg.pt
+            📄 Yolo_v12_medium-seg.pt
+        📁 nano/
+            📄 Yolo_v08_nano-seg.pt
+            📄 Yolo_v11_nano-seg.pt
+            📄 Yolo_v12_nano-seg.pt
+        📁 small/
+            📄 Yolo_v08_small-seg.pt
+            📄 Yolo_v11_small-seg.pt
+            📄 Yolo_v12_small-seg.pt
+    📁 utils/
+        📄 crop_saver.py
+        📄 image_utils.py
+        📄 model_loader.py
+        📄 scorer.py
+        📄 segmentor.py

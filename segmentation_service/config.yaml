@@ -1,0 +1,25 @@
+# 📁 Base directory where all job_<uuid> folders are created
+# This path is relative to the segmentation_service/ folder.
+# It should point to the shared/ directory at the project root.
+base_shared_dir: "../shared"
+
+# ⏳ Number of seconds to wait between checks for an uploaded image
+# Recommended: 2–5 seconds for responsive operation
+check_interval_seconds: 5
+
+# 🎯 Minimum confidence threshold for segmentation detections
+# Detections with a lower confidence score will be ignored
+confidence_threshold: 0.075
+# Best (26/04/25) - 0.075
+# 📈 IoU threshold for filtering overlapping bounding boxes
+# If IoU between two boxes is greater than this, one will be discarded
+iou_threshold: 0.4
+# Best (26/04/25) - 0.4 or 0.3
+# Default - 0.5
+# 🧠 Directory where YOLOv8/11/12 models weights are stored
+# This is relative to the segmentation_service/ folder.
+models_dir: "./models"
+
+# 📂 Subfolder name inside each job where cropped objects will be saved
+# Typically named 'objects'
+output_subdir: "objects"

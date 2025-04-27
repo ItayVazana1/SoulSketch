@@ -108,7 +108,7 @@ The graphical interface of the system will be developed using **Streamlit**, a P
 Each container can be executed manually in development:
 
 ```bash
-python segment.py --input shared/job_123/uploaded.png
+python segment_service.py --input shared/job_123/uploaded.png
 python object_processor.py --job_id 123
 python comparator_engine.py --job_id 123
 python emotion_mapper_main.py --job_id 123

@@ -136,7 +136,7 @@ boxes = instances.pred_boxes.tensor.cpu().numpy()
 ## 🧾 Dev Execution (Manual)
 
 ```bash
-python segment.py --input shared/job_123/uploaded.png
+python segment_service.py --input shared/job_123/uploaded.png
 ```
 
 - Outputs: `segmented_objects.json` + cropped PNGs.
