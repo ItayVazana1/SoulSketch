@@ -13,7 +13,7 @@ confidence_threshold: 0.075
 # Best (26/04/25) - 0.075
 # 📈 IoU threshold for filtering overlapping bounding boxes
 # If IoU between two boxes is greater than this, one will be discarded
-iou_threshold: 0.4
+iou_threshold: 0.2
 # Best (26/04/25) - 0.4 or 0.3
 # Default - 0.5
 # 🧠 Directory where YOLOv8/11/12 models weights are stored

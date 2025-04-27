@@ -19,8 +19,8 @@ def load_models(models_base_path: str) -> dict:
     """
     layers = {
         "nano": "n",
-        "small": "s",
-        "medium": "m",
+        "small": "s"
+        #"medium": "m",
     }
     versions = ["v08", "v11", "v12"]
     models = {}
