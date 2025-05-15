@@ -23,7 +23,7 @@ Feel free to reach out regarding academic collaborations, code reuse, or further
 - [📁 Project Directory Structure](#-project-directory-structure)
 - [📤 Output Format](#-output-format)
 - [🛠️ Technologies Used](#️-technologies-used)
-- [🖼️ Report Example](#-visual-previews)
+- [🖼️ Examples](#-visual-previews)
 - [📦 How to Run](#-how-to-run)
 - [📝 License](#-license)
 
@@ -222,9 +222,15 @@ Full_Analyze_Flow/
 
 ---
 
-## 🖼️ Report Example
+## 🖼️ Examples
+### PDF Drawing analysis report -
 
-![Preview](others/demo_preview.png) 
+![Preview](others/report_preview.png)
+
+### UI -
+(powered by Streamlit UI)
+
+![Preview](others/ui_preview.png) 
 
 ---
 
