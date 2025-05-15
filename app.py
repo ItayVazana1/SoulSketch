@@ -28,9 +28,11 @@ SHARED_INPUT = Path("shared_memory/0_BE_input/original_input.png")
 FINAL_PDF = Path("shared_memory/7_PDFG_out/full_analysis_report.pdf")
 LOG_DIR = Path("shared_memory/0_BE_out")
 CLEANUP_SCRIPT = Path("shared_memory/clean_and_archive_current_data.py")
+CLEAN_HISTORY_SCRIPT = Path("shared_memory/clean_history.py")
 
-if "cleanup_required" not in st.session_state:
-    st.session_state["cleanup_required"] = False
+# === SESSION DEFAULTS ===
+st.session_state.setdefault("cleanup_required", False)
+st.session_state.setdefault("confirm_history_cleanup", False)
 
 # === PAGE CONFIG ===
 st.set_page_config(page_title="SoulSketch", layout="centered")
@@ -132,6 +134,8 @@ def describe_step(step: str) -> str:
     return mapping.get(step, "Processing...")
 
 # === FILE UPLOAD ===
+st.markdown("---")
+st.subheader("📂 Upload Drawing")
 uploaded_file = st.file_uploader("Upload the drawing here", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is None:
@@ -154,18 +158,48 @@ if uploaded_file:
             else:
                 st.error(f"❌ Upload failed: {result['error']}")
 
-# === CLEANUP BUTTON ===
+# === MAINTENANCE ZONE ===
 st.markdown("---")
-if st.button("🧹 Clear Temporary & Archive"):
-    if CLEANUP_SCRIPT.exists():
-        try:
-            subprocess.run(["python", str(CLEANUP_SCRIPT)], check=True)
-            st.success("✅ Workspace cleaned and archived.")
-            st.session_state["cleanup_required"] = False
-        except subprocess.CalledProcessError as e:
-            st.warning(f"⚠️ Cleanup script failed: {e}")
-    else:
-        st.warning("⚠️ Cleanup script not found.")
+st.subheader("🧰 Tools & Data Management")
+col1, col2 = st.columns(2)
+
+with col1:
+    if st.button("🧹 Clear Temporary & Archive"):
+        if CLEANUP_SCRIPT.exists():
+            try:
+                subprocess.run(["python", str(CLEANUP_SCRIPT)], check=True)
+                st.success("✅ Workspace cleaned and archived.")
+                st.session_state["cleanup_required"] = False
+            except subprocess.CalledProcessError as e:
+                st.warning(f"⚠️ Cleanup script failed: {e}")
+        else:
+            st.warning("⚠️ Cleanup script not found.")
+
+with col2:
+    with st.expander("🗑️ Clear History Folder"):
+        if st.button("⚠️ Start History Cleanup", key="start_history_cleanup"):
+            st.session_state["confirm_history_cleanup"] = True
+
+        if st.session_state["confirm_history_cleanup"]:
+            st.warning("⚠️ Are you sure you want to delete ALL past history?")
+            confirm_radio = st.radio("Confirm action:", ["No", "Yes, I understand the risk"], index=0, key="radio_history_confirm")
+
+            if confirm_radio == "Yes, I understand the risk":
+                typed_input = st.text_input("To confirm, type exactly: SoulSketch", key="typed_confirm")
+
+                if typed_input.strip() == "SoulSketch":
+                    if st.button("✅ Final Confirmation – Delete History", key="final_confirm_history"):
+                        if CLEAN_HISTORY_SCRIPT.exists():
+                            try:
+                                subprocess.run(["python", str(CLEAN_HISTORY_SCRIPT)], check=True)
+                                st.success("✅ History folder was cleared successfully.")
+                                st.session_state["confirm_history_cleanup"] = False
+                            except subprocess.CalledProcessError as e:
+                                st.error(f"❌ Failed to clear history: {e}")
+                        else:
+                            st.warning("⚠️ History cleanup script not found.")
+                elif typed_input:
+                    st.error("❌ Text does not match. Please type 'SoulSketch' exactly.")
 
 # === WARNINGS ===
 st.markdown("---")
@@ -173,6 +207,7 @@ if st.session_state.get("cleanup_required", False):
     st.warning("⚠️ Please clear temporary data before running a new analysis.")
 
 # === RUN ANALYSIS ===
+st.subheader("🧠 Run Emotional Analysis")
 if st.button("🧠 Run Full Analysis", disabled=st.session_state.get("cleanup_required", False)):
     if not SHARED_INPUT.exists():
         st.error("❌ No image found in shared memory. Please upload before running analysis.")
@@ -212,6 +247,7 @@ if st.button("🧠 Run Full Analysis", disabled=st.session_state.get("cleanup_re
 
 # === DOWNLOAD SECTION ===
 st.markdown("---")
+st.subheader("📥 Download Results")
 if st.session_state.get("cleanup_required", False):
     zip_path = package_results_as_zip()
     if zip_path and zip_path.exists():

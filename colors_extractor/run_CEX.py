@@ -133,7 +133,7 @@ def main():
     print("[INFO] Cleaning up temp directory...")
     clean_temp()
 
-    print("[INFO] ✅ Color extraction pipeline completed successfully.")
+    print("[INFO] Color extraction pipeline completed successfully.")
 
 
 # ==== Entry Point ====

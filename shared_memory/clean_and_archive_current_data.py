@@ -1,7 +1,7 @@
 """
 Project: SoulSketch
 File   : shared_memory/clean_and_archive_current_data.py
-Author : Itay Vazana
+Authors: Itay Vazana & Oriya Even Chen
 
 Description:
 Archives and cleans all contents under shared_memory/* except for:
@@ -69,28 +69,37 @@ def archive_current_process(base_path: Path) -> None:
 
 def clean_all_except_history(base_path: Path) -> None:
     """
-    Deletes all content under shared_memory/* except:
-    - The '8_History' directory
+    Empties all folders under shared_memory/* except:
+    - The '8_History' folder
     - Python scripts (*.py)
     - Markdown files (*.md)
 
+    Folder structures are preserved.
     Args:
         base_path (Path): The shared_memory folder path.
     """
     for item in base_path.iterdir():
         if item.name == EXCLUDED_FOLDER:
             continue
+
         if item.suffix in EXCLUDED_EXTENSIONS:
             continue
 
         if item.is_file():
             item.unlink()
             print(f"[DEL FILE] {item}")
-        elif item.is_dir():
-            shutil.rmtree(item)
-            print(f"[DEL DIR] {item}")
 
-    print("[DONE] Cleanup complete.")
+        elif item.is_dir():
+            for sub_item in item.iterdir():  # Iterate over files in the folder
+                if sub_item.suffix in EXCLUDED_EXTENSIONS and sub_item.is_file():
+                    continue
+                if sub_item.is_file():
+                    sub_item.unlink()
+                    print(f"[DEL FILE] {sub_item}")
+                elif sub_item.is_dir():
+                    shutil.rmtree(sub_item)  # Remove subdirectories' contents
+
+    print("[DONE] Folder content cleanup complete.")
 
 
 # === Entry Point ===
