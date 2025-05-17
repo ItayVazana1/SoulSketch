@@ -81,6 +81,20 @@ Each module operates in sequence and stores its output in `shared_memory/` for t
 
 ---
 
+## 🎬 Training Highlights
+
+Get a glimpse into the behind-the-scenes training process of SoulSketch's core machine learning models:  
+- Emotion classification (YOLOv11-cls)  
+- Object detection (YOLOv11)  
+- Facial expression recognition (YOLOv11)
+
+Click below to watch the 3-minute training video, featuring real progress, funny glitches, and some classic AI chaos 🤖🎨
+
+[![Watch Training Video](./others/Training_Process_Video/video_thumbnail.png)](./others/Training_Process_Video/training_video_soulsketch.mp4)
+
+
+---
+
 ## 🔍 Detailed Processing Pipeline
 
 ### 1️⃣ Upload & Input Validation
@@ -236,16 +250,92 @@ Full_Analyze_Flow/
 
 ## 📦 How to Run
 
-### Using .bat file
+### ✅ Requirements
 
-Just click on 'run.bat' inside the project root folder.
+Make sure you have:
 
-### 🛠️ using CLI 
+- Python 3.10 installed (recommended: https://www.python.org/downloads/release/python-3100/)
+- Windows OS with CMD or compatible shell
+- No Docker or GPU needed – everything runs on CPU
 
-Get inside the project root folder in the terminal (CMD)
-and then type:
+---
+
+### 📦 Dependencies
+
+All required libraries are defined in `requirements.txt`, including:
+
+- PyTorch (CPU-only build)
+- OpenCV, Pillow, NumPy, scikit-learn, matplotlib
+- Streamlit (for the user interface)
+- ReportLab & PyPDF2 (for generating PDF reports)
+
+> ⚠️ Note: `numpy==1.26.4` is used for compatibility with Torch and Ultralytics (v8.3+)
+
+---
+
+### 🚀 1. First-Time Setup
+
+To install all dependencies, run:
+
+```
+install_requirements.bat
+```
+
+This script will:
+- Ensure Python 3.10 is available
+- Create a local `.venv` (virtual environment)
+- Install all required packages from `requirements.txt`
+- Use the **CPU-only** PyTorch wheels
+
+---
+
+### ▶️ 2. Run the Application
+
+To launch the Streamlit interface, run:
+
+```
+run.bat
+```
+
+What it does:
+- Validates Python 3.10 or shows a download link
+- Initializes missing `shared_memory/` folders
+- Creates `.venv` if needed
+- Installs missing requirements if needed
+- Launches the app using:
+
+  ```
+  streamlit run app.py
+  ```
+
+The app will be available at:
+
+```
+http://localhost:8501
+```
+
+---
+
+### 💬 Manual CLI Alternative
+
+If you prefer running things manually:
+
 ```bash
-  streamilt run app.py
+cd SoulSketch/
+python -m venv .venv
+call .venv\Scripts\activate
+pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+streamlit run app.py
+```
+
+---
+
+### 🔁 Optional Reset
+
+To delete the current virtual environment and start clean:
+
+```
+reset_venv.bat
 ```
 
 ---
