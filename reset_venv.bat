@@ -12,3 +12,4 @@ echo [DONE] .venv folder removed (if existed).
 echo.
 echo [EXIT] Press any key to close...
 pause >nul
+ 
